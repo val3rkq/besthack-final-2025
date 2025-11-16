@@ -82,39 +82,19 @@ class GeocoderAlgorithm:
 
         return objects
 
-
     def reverse(
         self,
         lat: float,
         lon: float,
-        top_n: int = 1,
-        radius_m: float = 200.0,
     ) -> List[Dict[str, Any]]:
-        """
-        Ищем ближайшие адреса к точке (lat, lon).
-        Здесь используем тот же dataset и формулу Haversine.
-        """
-        candidates: List[str] = []
-        for i in range(top_n):
-            candidates.append(self.model.address_by_coords(lat, lon))
-
-        candidates.sort(key=lambda x: x[0])
-        candidates = candidates[:top_n]
-
         objects: List[Dict[str, Any]] = []
-        for dist_m, row in candidates:
-            objects.append(
-                {
-                    "locality": "Москва",
-                    "street": str(row["address"]),
-                    "number": "",
-                    "lat": float(row["lat"]),
-                    "lon": float(row["lon"]),
-                    "score": None,
-                    "distance_m": float(dist_m),
-                }
-            )
-
+        objects.append(
+            {
+                "address": self.model.address_by_coords(lat, lon),
+                "lat": lat,
+                "lon": lon, 
+            }
+        )
         return objects
 
     def get_best_candidate(

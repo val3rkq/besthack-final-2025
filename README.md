@@ -92,12 +92,10 @@ docker run -p 8000:8000 -v "$(pwd):/workspace" besthack
 Параметры:
 - lat (float, обязательный) - широта
 - lon (float, обязательный) - долгота
-- top_n (int, по умолчанию 1) - количество возвращаемых результатов
-- radius_m (float, по умолчанию 200.0) - радиус поиска в метрах
 
 Запрос:
 ```
-GET /reverse?lat=55.751244&lon=37.618423&top_n=3&radius_m=300
+GET /reverse?lat=55.751244&lon=37.618423
 ```
 
 Ответ:
@@ -107,13 +105,9 @@ GET /reverse?lat=55.751244&lon=37.618423&top_n=3&radius_m=300
   "query_point_lon": 37.618423,
   "objects": [
     {
-      "locality": "Москва",
-      "street": "улица Ленина дом 3",
-      "number": "",
+      "address": "some address",
       "lat": 55.751244,
       "lon": 37.618423,
-      "score": null,
-      "distance_m": 15.5
     }
   ]
 }

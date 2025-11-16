@@ -3,7 +3,7 @@ from fastapi.responses import HTMLResponse
 
 
 from app.models import (
-    SearchRequest, SearchResponse, AddressObject,
+    SearchRequest, SearchResponse, AddressObject, AddressObject2,
     ReverseResponse,
     CompareRequest, CompareResponse
 )
@@ -45,12 +45,10 @@ def search_addresses(
 def reverse_geocode(
     lat: float = Query(...),
     lon: float = Query(...),
-    top_n: int = 1,
-    radius_m: float = 200.0,
     geocoder: GeocoderAlgorithm = Depends(get_geocoder),
 ):
-    results = geocoder.reverse(lat=lat, lon=lon, top_n=top_n, radius_m=radius_m)
-    objects = [AddressObject(**r) for r in results] if results else []
+    results = geocoder.reverse(lat=lat, lon=lon)
+    objects = [AddressObject2(**r) for r in results] if results else []
 
     return ReverseResponse(
         query_point_lat=lat,
